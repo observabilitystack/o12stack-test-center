@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  o12stack-test-center:
+    image: observabilitystack/o12stack-test-center:1
+    ports:
+      - 8080:8080
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
