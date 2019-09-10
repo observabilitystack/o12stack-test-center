@@ -7,7 +7,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
   o12stack-test-center:
     image: observabilitystack/o12stack-test-center:2
@@ -18,3 +18,8 @@ services:
     image: grafana/grafana
     ports:
       - 3000:3000
+    volumes:
+      - ./grafana/datasources/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml
+      - ./grafana/dashboards/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml
+      - ./grafana/dashboards/o12stack-test-center.json:/var/lib/grafana/dashboards/o12stack-test-center.json
+      
