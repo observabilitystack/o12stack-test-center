@@ -1,13 +1,14 @@
 package org.o12stack.o12stack.testcenter.web;
 
-import java.util.Arrays;
-
+import org.o12stack.o12stack.testcenter.jobs.JobExecutor;
+import org.o12stack.o12stack.testcenter.jobs.JobExecutor.PoolSize;
 import org.o12stack.o12stack.testcenter.jobs.JobPublisher;
+import org.o12stack.o12stack.testcenter.jobs.JobPublisher.Complexity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -16,38 +17,22 @@ public class UiController {
 	@Autowired
 	JobPublisher publisher;
 
+	@Autowired
+	JobExecutor executor;
+
 	@GetMapping(path = "")
-	@ResponseBody
-	public String index() {
-		StringBuilder indexHtml = new StringBuilder();
-		indexHtml.append("<h1>(ugly) temporary interface of O12Stack Test Center</h1>");
-		indexHtml.append("<h3>... allows you to control submission of dummy Jobs into the system ...</h3>");
-		indexHtml.append("Job Publisher is" + (publisher.isRunning() ? "" : " NOT") + " running.<br/>");
-		if (publisher.isRunning()) {
-			indexHtml.append("<a href=\"/jobs/publisher/stop\">STOP</a><br/>");
-		} else {
-			indexHtml.append("<a href=\"/jobs/publisher/start\">START</a><br/><br/>");
-		}
-		indexHtml.append("<br/>");
-		indexHtml.append("<br/>");
-		indexHtml.append("Job Publisher is" + (publisher.isOutliers() ? "" : " NOT") + " pushing outliers.<br/>");
-		if (publisher.isOutliers()) {
-			indexHtml.append("<a href=\"/jobs/publisher/outliers/disable\">DISABLE</a><br/><br/>");
-		} else {
-			indexHtml.append("<a href=\"/jobs/publisher/outliers/enable\">ENABLE</a><br/><br/>");
-		}
-		indexHtml.append("<br/>");
-		indexHtml.append("<br/>");
-		indexHtml.append("Job Publisher Speed is " + publisher.getSpeed() + ".<br/><br/>");
-		Arrays.stream(JobPublisher.Speed.values())
-				.map(speed -> "<a href=\"/jobs/publisher/speed/set?value=" + speed + "\">" + speed + "</a><br/>")
-				.forEach(indexHtml::append);
-		indexHtml.append("<br/>");
-		indexHtml.append("Job Complexity is " + publisher.getComplexity() + ".<br/><br/>");
-		Arrays.stream(JobPublisher.Speed.values()).map(complexity -> "<a href=\"/jobs/publisher/complexity/set?value="
-				+ complexity + "\">" + complexity + "</a><br/>").forEach(indexHtml::append);
-		indexHtml.append("<br/>");
-		return indexHtml.toString();
+	public String index(Model model) {
+		model.addAttribute("started", publisher.isRunning());
+		
+		model.addAttribute("poolSizes", PoolSize.values());
+		model.addAttribute("currentPoolSize", executor.getPoolSize());
+		
+		model.addAttribute("complexities", Complexity.values());
+		model.addAttribute("currentComplexity", publisher.getComplexity());
+		
+		model.addAttribute("outliers", publisher.isOutliers());
+		
+		return "index";
 	}
 
 	@GetMapping(path = "/jobs/publisher/start")
@@ -74,9 +59,9 @@ public class UiController {
 		return new RedirectView("/");
 	}
 
-	@GetMapping(path = "/jobs/publisher/speed/set")
-	public RedirectView setSpeed(@RequestParam(required = true, name = "value") JobPublisher.Speed value) {
-		publisher.setSpeed(value);
+	@GetMapping(path = "/jobs/executor/poolsize/set")
+	public RedirectView setSpeed(@RequestParam(required = true, name = "value") JobExecutor.PoolSize value) {
+		executor.setPoolSize(value);
 		return new RedirectView("/");
 	}
 
@@ -85,5 +70,13 @@ public class UiController {
 		publisher.setComplexity(value);
 		return new RedirectView("/");
 	}
+	
+	@GetMapping(path = "/jobs/publisher/drop-a-bomb")
+	public RedirectView dropABomb() {
+		executor.dropTheBomb();
+		return new RedirectView("/");
+	}
+
+	
 
 }

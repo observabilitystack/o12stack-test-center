@@ -14,7 +14,7 @@ public class SleepJobs {
 	}
 	
 	public static Job of(long sleepMillis) {
-		return Job.of(String.format("Wait for %d ms...", sleepMillis), () -> {
+		return Job.of(String.format("Sleep for %d ms.", sleepMillis), () -> {
 			try {
 				Thread.sleep(sleepMillis);
 			} catch (InterruptedException e) {

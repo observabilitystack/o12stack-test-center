@@ -10,7 +10,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
   o12stack-test-center:
-    image: observabilitystack/o12stack-test-center:1
+    image: observabilitystack/o12stack-test-center:2
     ports:
       - 8080:8080
 

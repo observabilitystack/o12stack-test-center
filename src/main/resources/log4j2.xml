@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <JSONLayout complete="false" eventEol="true" compact="true" stacktraceAsString="true" />
+        </Console>
+        <File name="SpringLog" fileName="/var/log/spring.log">
+            <JSONLayout complete="false" eventEol="true" compact="true" stacktraceAsString="true" />
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="SpringLog"/>
+        </Root>
+    </Loggers>
+</Configuration>

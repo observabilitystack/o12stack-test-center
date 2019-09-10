@@ -1,0 +1,13 @@
+---
+spring:
+  main:
+    banner-mode: "off"
+---
+logging:
+  config: "classpath:log4j2.xml"
+---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"

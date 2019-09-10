@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>o12stack test center</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link th:href="@{/styles/main.css}" href="../styles/main.css"
+	rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="align-div">
+		<div class="content-div">
+			<div class="header-left"><img src="/biomass-test.png" /></div>
+			<div class="header-left">
+				<h1>o12stack<br/>test<br/>center</h1>
+			</div>
+			<div class="header-right"><img src="/o12stack.png" /></div>
+			<div class="architecture"><img src="/architecture.png" /></div>
+			<div class="settings-container-left">
+				<div class="settings-logo"><img src="/onoff.png" /></div>
+				<div class="settings-widgets">
+					<a class="buttonStart" th:if="${!started}" href="/jobs/publisher/start">Start</a>
+					<span class="buttonDisabled" th:if="${started}">Start</span>
+					<a class="buttonStop" th:if="${started}" href="/jobs/publisher/stop">Stop</a>
+					<span class="buttonDisabled" th:if="${!started}">Stop</span>
+				</div>
+			</div>
+			<div class="settings-container-right">
+				<div class="settings-logo"><img src="/cpu.png" /></div>
+				<div class="settings-widgets">
+				<span th:each="poolSize,iter : ${poolSizes}"> 
+					<span class="buttonDisabled" 
+						th:if="${poolSize==currentPoolSize}"
+						th:text="${poolSize.poolSize}"></span> 
+					<a class="button"
+						th:if="${poolSize!=currentPoolSize}"
+						th:href="@{/jobs/executor/poolsize/set?value={poolSize}(poolSize=${poolSize})}"
+						th:text="${poolSize.poolSize}"></a>
+				</span>					
+				</div>
+			</div>
+			<div class="settings-container-left">
+				<div class="settings-logo"><img src="/brain.png" /></div>
+				<div class="settings-widgets">
+					<span th:each="complexity,iter : ${complexities}"> 
+					<span class="buttonDisabled" 
+						th:if="${complexity==currentComplexity}"
+						th:text="${complexity.caption}"></span> 
+					<a class="button"
+						th:if="${complexity!=currentComplexity}"
+						th:href="@{/jobs/publisher/complexity/set?value={complexity}(complexity=${complexity})}"
+						th:text="${complexity.caption}"></a>
+				</span>
+				</div>
+			</div>
+			<div class="settings-container-right">
+				<div class="settings-logo"><img src="/bomb.png" /></div>
+				<div class="settings-widgets">
+					<a class="button" th:if="${started}" href="/jobs/publisher/drop-a-bomb">Drop a bomb!</a>
+					<span class="buttonDisabled" th:if="${!started}">Drop a bomb!</span>
+				</div>
+			</div>
+			<div class="settings-container-left">
+				<div class="settings-logo"><img src="/snail.png" /></div>
+				<div class="settings-widgets">
+					<a class="buttonStart" th:if="${!outliers}" href="/jobs/publisher/outliers/enable">ON</a>
+					<span class="buttonDisabled" th:if="${outliers}">ON</span>
+					<a class="buttonStop" th:if="${outliers}" href="/jobs/publisher/outliers/disable">OFF</a>
+					<span class="buttonDisabled" th:if="${!outliers}">OFF</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

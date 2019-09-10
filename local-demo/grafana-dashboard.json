@@ -65,6 +65,11 @@
           "expr": "jobs_completed_total",
           "legendFormat": "Jobs Completed",
           "refId": "B"
+        },
+        {
+          "expr": "jobs_failed_total",
+          "legendFormat": "Jobs Failed",
+          "refId": "C"
         }
       ],
       "thresholds": [],

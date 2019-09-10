@@ -4,7 +4,7 @@ This is a small demo application that can be used for test or training purposes 
 
 ## What does this demo do?
 
-This demo processes 'jobs' (small math tasks) using a 4-piece thread pool with workers.
+This demo processes 'jobs' (small dummy tasks) using a 4-piece thread pool with workers.
 
 Via a UI (as of now a pretty basic one) you can control the flow of jobs.
 
@@ -51,7 +51,7 @@ The UI of the demo app can be accessed via http://localhost:8080.
 
 **Prometheus** is configured by mounting the `prometheus.yml` in which the scraping of our demo application is set up. You can access Prometheus via http://localhost:9090.
 
-**Grafana** can be accessed via http://localhost:3000. The initial username/pwd is `admin`/`admin`, you are requested to change it. Remember, it's just a local demo, so don't put too much effort in that. 
+**Grafana** can be accessed via http://localhost:3000. The initial username/pwd is `admin`/`admin`, you are requested to change it, but that step can be skipped. 
 
 You have to configure a Prometheus Data Source using http://prometheus:9090, which is the correct address of Prometheus inside the Docker compose network.
 
@@ -63,3 +63,5 @@ Go play around with the stuff ...
 ### Kubernetes
 
 (TBD)
+
+[rules-of-a-threadpoolexecutor-pool-size]: http://www.bigsoft.co.uk/blog/2009/11/27/rules-of-a-threadpoolexecutor-pool-size
