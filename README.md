@@ -87,7 +87,102 @@ Therefore, we only show the mean, the 90% quantile and the max value. The averag
 
 ## Logs
 
-(TBD)
+The application emits logs as JSON one-liners via stdout. You should be able to parse/analyze them with your favourite logging stack.
+
+This is how the stream of logs looks like:
+
+```
+{"thread":"Thread-3","level":"INFO","loggerName":"org.o12stack.o12stack.testcenter.jobs.JobExecutor","message":"Submitted job 2a324725-f570-4c22-81d8-6e240b58315c","endOfBatch":false,"loggerFqcn":"org.apache.logging.slf4j.Log4jLogger","instant":{"epochSecond":1569318018,"nanoOfSecond":596993000},"threadId":33,"threadPriority":5}
+{"thread":"pool-2-thread-2","level":"INFO","loggerName":"org.o12stack.o12stack.testcenter.jobs.JobExecutor","message":"Started job 2a324725-f570-4c22-81d8-6e240b58315c after waiting for PT0.001581S","endOfBatch":false,"loggerFqcn":"org.apache.logging.slf4j.Log4jLogger","instant":{"epochSecond":1569318018,"nanoOfSecond":598688000},"threadId":35,"threadPriority":5}
+{"thread":"pool-2-thread-2","level":"INFO","loggerName":"org.o12stack.o12stack.testcenter.jobs.JobExecutor","message":"Finished job 2a324725-f570-4c22-81d8-6e240b58315c after running for PT0.587217S: 'Sleep for 586 ms.' => 'DONE!'","endOfBatch":false,"loggerFqcn":"org.apache.logging.slf4j.Log4jLogger","instant":{"epochSecond":1569318019,"nanoOfSecond":185966000},"threadId":35,"threadPriority":5}
+```
+
+Let's look into the details of these log messages.
+
+The following message is written if a job is created and submitted into the system. Each job has a UUID which can be found as part of the `message` string:
+
+```json
+{
+    "thread": "Thread-3",
+    "level": "INFO",
+    "loggerName": "org.o12stack.o12stack.testcenter.jobs.JobExecutor",
+    "message": "Submitted job 2a324725-f570-4c22-81d8-6e240b58315c",
+    "endOfBatch": false,
+    "loggerFqcn": "org.apache.logging.slf4j.Log4jLogger",
+    "instant": {
+        "epochSecond": 1569318018,
+        "nanoOfSecond": 596993000
+    },
+    "threadId": 33,
+    "threadPriority": 5
+}
+```
+
+After a job's execution has started, a message is written containing the waiting time of this job:
+
+```json
+{
+    "thread": "pool-2-thread-2",
+    "level": "INFO",
+    "loggerName": "org.o12stack.o12stack.testcenter.jobs.JobExecutor",
+    "message": "Started job 2a324725-f570-4c22-81d8-6e240b58315c after waiting for PT0.001581S",
+    "endOfBatch": false,
+    "loggerFqcn": "org.apache.logging.slf4j.Log4jLogger",
+    "instant": {
+        "epochSecond": 1569318018,
+        "nanoOfSecond": 598688000
+    },
+    "threadId": 35,
+    "threadPriority": 5
+}
+```
+
+After the job execution is done, you'll find a message like this one:
+
+```json
+{
+    "thread": "pool-2-thread-2",
+    "level": "INFO",
+    "loggerName": "org.o12stack.o12stack.testcenter.jobs.JobExecutor",
+    "message": "Finished job 2a324725-f570-4c22-81d8-6e240b58315c after running for PT0.587217S: 'Sleep for 586 ms.' => 'DONE!'",
+    "endOfBatch": false,
+    "loggerFqcn": "org.apache.logging.slf4j.Log4jLogger",
+    "instant": {
+        "epochSecond": 1569318019,
+        "nanoOfSecond": 185966000
+    },
+    "threadId": 35,
+    "threadPriority": 5
+}
+```
+
+If a job's execution failed, the JSON is a little more complex and holds Java stack trace data:
+
+```json
+{
+    "thread": "pool-2-thread-13",
+    "level": "ERROR",
+    "loggerName": "org.o12stack.o12stack.testcenter.jobs.JobExecutor",
+    "message": "Error in job 9ed58643-95e8-4612-9367-ffabf572d2ba",
+    "thrown": {
+        "commonElementCount": 0,
+        "localizedMessage": "Something went terribly wrong!",
+        "message": "Something went terribly wrong!",
+        "name": "java.lang.RuntimeException",
+        "extendedStackTrace": "java.lang.RuntimeException: Something went terribly wrong!\n\tat org.o12stack.o12stack.testcenter.jobs.JobExecutor.lambda$submit$2(JobExecutor.java:95) ~[classes!/:2]\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) [?:?]\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) [?:?]\n\tat java.lang.Thread.run(Thread.java:835) [?:?]\n"
+    },
+    "endOfBatch": false,
+    "loggerFqcn": "org.apache.logging.slf4j.Log4jLogger",
+    "instant": {
+        "epochSecond": 1569318014,
+        "nanoOfSecond": 940076000
+    },
+    "threadId": 46,
+    "threadPriority": 5
+}
+```
+
+Beside these job-related log messages, the application emits some more technical messages at startup and shutdown. They come from the Spring(Boot) framework.
 
 ## Usage / Demo
 
