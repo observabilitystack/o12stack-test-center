@@ -29,7 +29,7 @@ The application offers Prometheus metrics via the endpoint http://localhost:8080
 This graph shows the total number of jobs over time. As it only shows counters, the values can only drop back to zero if the application is restarted.
 
 |  metric/counter | description  | 
-|---|---|---|---|---|
+|---|---|
 | `jobs_submitted_total`  | Total # of submitted jobs | 
 | `jobs_completed_total`  | Total # of jobs that were completed successfully | 
 | `jobs_failed_total`  | Total # of jobs that failed. | 
@@ -41,7 +41,7 @@ This graph shows the total number of jobs over time. As it only shows counters, 
 This graph shows the current number of jobs waiting to be executed.
 
 |  metric/counter | description  | 
-|---|---|---|---|---|
+|---|---|
 | `jobs_waiting`  | Current # of jobs which are waiting for execution | 
 | `jobs_in_progress`  | Current # of jobs in progress (not shown in graph above) | 
 
@@ -70,7 +70,7 @@ job_duration_timer_seconds_max 0.871385
 ```
 
 |  metric/counter | description  | 
-|---|---|---|---|---|
+|---|---|
 | `job_duration_timer_seconds{quantile=...}`  | duration at given quantile (sliding window) | 
 | `job_duration_timer_seconds_count`  | (Counter) number of counted durations (total) | 
 | `job_duration_timer_seconds_sum`  | (Counter) sum of all counted durations (total) | 
