@@ -17,7 +17,8 @@ You can do the following things with the UI:
 * (snail symbol) if switched on, about 3% of the jobs are outliers, their processing takes considerably longer
 * (processor symbol) number of executors to adjust parallel execution
 * (bomb symbol) If you drop a bomb (one per click), the next scheduled job will fail with an exception right after being launched.
-
+* (skull symbol) A click on this button causes the application/JVM to terminate with an `OutOfMemoryError`.
+ 
 ## Metrics
 
 The application offers Prometheus metrics via the endpoint http://localhost:8080/actuator/prometheus.
