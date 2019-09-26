@@ -14,7 +14,7 @@
 				<h1>o12stack<br/>test<br/>center</h1>
 			</div>
 			<div class="header-right"><img src="/o12stack.png" /></div>
-			<div class="architecture"><img src="/architecture.png" /></div>
+			<div class="architecture"></div>
 			<div class="settings-container-left">
 				<div class="settings-logo"><img src="/onoff.png" /></div>
 				<div class="settings-widgets">
@@ -66,6 +66,12 @@
 					<span class="buttonDisabled" th:if="${outliers}">ON</span>
 					<a class="buttonStop" th:if="${outliers}" href="/jobs/publisher/outliers/disable">OFF</a>
 					<span class="buttonDisabled" th:if="${!outliers}">OFF</span>
+				</div>
+			</div>
+			<div class="settings-container-right">
+				<div class="settings-logo"><img src="/skull.png" /></div>
+				<div class="settings-widgets">
+					<a class="buttonStop" href="/oom">JVM Out Of Memory Error</a>
 				</div>
 			</div>
 		</div>

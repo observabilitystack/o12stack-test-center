@@ -77,6 +77,14 @@ public class UiController {
 		return new RedirectView("/");
 	}
 
+	@GetMapping(path = "/oom")
+	public RedirectView outOfMemory() {
+		new Thread(() -> {
+			Long[] tooLong = new Long[Integer.MAX_VALUE];
+		}).start();
+		return new RedirectView("/");
+	}
+
 	
 
 }
