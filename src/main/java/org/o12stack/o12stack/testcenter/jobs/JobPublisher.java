@@ -2,6 +2,8 @@ package org.o12stack.o12stack.testcenter.jobs;
 
 import java.util.Random;
 
+import javax.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,7 @@ public class JobPublisher {
 	/**
 	 * Stop publishing jobs.
 	 */
+	@PreDestroy
 	public void stop() {
 		this.running = false;
 		logger.info("Stopped publishing of jobs.");

@@ -6,6 +6,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.annotation.PreDestroy;
+
 import org.apache.tomcat.util.threads.TaskQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,8 @@ public class JobExecutor {
 	 */
 	private AtomicBoolean bombDropped = new AtomicBoolean(false);
 	
+	private boolean shutdownRequested = false;
+
 	public JobExecutor(MeterRegistry registry) {
 		
 		this.taskQueue = new TaskQueue(100_000);
@@ -78,6 +82,11 @@ public class JobExecutor {
 	 */
 	public void submit(Job job) {
 		
+		// no new jobs are allowed to be submitted if shutdown is in progress
+		if(shutdownRequested) {
+			return;
+		}
+
 		// start wait
 		Instant timeSubmitted = Instant.now();
 		logger.info("Submitted job {}", job.getId());
@@ -132,6 +141,14 @@ public class JobExecutor {
 		this.bombDropped.set(true);
 	}
 
+	@PreDestroy
+	public void shutdown() {
+		this.shutdownRequested = true;
+		this.taskQueue.clear();
+		this.threadPoolExecutor.shutdown();
+	}
+	
+	
 	public static enum PoolSize {
 		ONE(1), TWO(2), FOUR(4), EIGHT(8), SIXTEEN(16);
 
@@ -145,6 +162,5 @@ public class JobExecutor {
 			return poolSize;
 		}
 	}
-	
-	
+
 }

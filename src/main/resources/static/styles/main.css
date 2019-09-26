@@ -234,17 +234,25 @@ div.settings-widgets {
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #ffffff;
 }
-/* .buttonDisabled:hover { */
-/* 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff)); */
-/* 	background:-moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%); */
-/* 	background:-webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%); */
-/* 	background:-o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%); */
-/* 	background:-ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%); */
-/* 	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%); */
-/* 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0); */
-/* 	background-color:#f6f6f6; */
-/* } */
-/* .buttonDisabled:active { */
-/* 	position:relative; */
-/* 	top:1px; */
-/* } */
+
+html.killed, body.killed
+{
+    height: 100%;
+    margin:0;
+    padding:0;
+}
+
+div.killed {
+    position:relative;
+    height: 100%;
+    width:100%;
+}
+
+div.killed img {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}

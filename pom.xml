@@ -13,7 +13,7 @@
 
     <groupId>org.o12stack</groupId>
     <artifactId>o12stack-test-center</artifactId>
-    <version>3</version>
+    <version>4</version>
 
     <name>o12stack-test-center</name>
     <description>Test Center Application for the Observability Stack</description>

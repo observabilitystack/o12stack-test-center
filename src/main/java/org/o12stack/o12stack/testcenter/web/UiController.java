@@ -1,5 +1,6 @@
 package org.o12stack.o12stack.testcenter.web;
 
+import org.o12stack.o12stack.testcenter.O12stackTestCenterApplication;
 import org.o12stack.o12stack.testcenter.jobs.JobExecutor;
 import org.o12stack.o12stack.testcenter.jobs.JobExecutor.PoolSize;
 import org.o12stack.o12stack.testcenter.jobs.JobPublisher;
@@ -33,6 +34,11 @@ public class UiController {
 		model.addAttribute("outliers", publisher.isOutliers());
 		
 		return "index";
+	}
+
+	@GetMapping(path = "/killed")
+	public String killed(Model model) {
+		return "killed";
 	}
 
 	@GetMapping(path = "/jobs/publisher/start")
@@ -77,12 +83,10 @@ public class UiController {
 		return new RedirectView("/");
 	}
 
-	@GetMapping(path = "/oom")
-	public RedirectView outOfMemory() {
-		new Thread(() -> {
-			Long[] tooLong = new Long[Integer.MAX_VALUE];
-		}).start();
-		return new RedirectView("/");
+	@GetMapping(path = "/kill")
+	public String kill() {
+		O12stackTestCenterApplication.kill();
+		return "killed";
 	}
 
 	
