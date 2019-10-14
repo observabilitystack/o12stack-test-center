@@ -431,7 +431,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_memory_used_bytes{job=\"o12stc\"}",
+          "expr": "jvm_memory_used_bytes",
           "instant": false,
           "legendFormat": "{{id}}",
           "refId": "B"
