@@ -13,7 +13,7 @@
 
     <groupId>org.o12stack</groupId>
     <artifactId>o12stack-test-center</artifactId>
-    <version>4</version>
+    <version>5</version>
 
     <name>o12stack-test-center</name>
     <description>Test Center Application for the Observability Stack</description>
@@ -66,6 +66,13 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <!-- Sentry -->
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-log4j2</artifactId>
+            <version>1.7.28</version>
         </dependency>
 
         <dependency>
